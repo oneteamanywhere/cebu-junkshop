@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { UrlObject } from 'url';
 
+
 type Url = string | UrlObject;
 
 interface Menu {
