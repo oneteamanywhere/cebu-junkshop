@@ -5,28 +5,34 @@ import type { UrlObject } from 'url';
 type Url = string | UrlObject;
 
 interface Menu {
+  id: number
   name: string
   href: Url
 }
 
 const menu: Menu[] = [
   {
+    id: 1,
     name: 'Home',
     href: '/',
   },
   {
+    id: 2,
     name: 'About',
     href: '/about',
   },
   {
+    id: 3,
     name: 'Services',
     href: '/services',
   },
   {
+    id: 4,
     name: 'Blog',
     href: '/blog',
   },
   {
+    id: 5,
     name: 'Contact',
     href: '/contact',
   }
@@ -43,7 +49,7 @@ const Header = () => {
       <div className="w-1/2 flex gap-6 items-center justify-end">
         <nav className="flex gap-6">
           {menu.map((link) => (
-            <Link href={link.href} className="text-sm">{link.name}</Link>
+            <Link key={link.id} href={link.href} className="text-sm">{link.name}</Link>
           ))}
         </nav>
 
