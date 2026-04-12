@@ -42,9 +42,11 @@ const Header = () => {
       {/* RIGHT AREA */}
       <div className="w-1/2 flex gap-6 items-center justify-end">
         <nav className="flex gap-6">
-          {menu.map((link) => (
-            <Link href={link.href} className="text-sm">{link.name}</Link>
-          ))}
+     {menu.map((link) => (
+  <Link key={link.href.toString()} href={link.href} className="text-sm">
+    {link.name}
+  </Link>
+))}
         </nav>
 
         <div>
