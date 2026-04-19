@@ -14,21 +14,21 @@ const SamplePage = () => {
       />
 
       <ImageWithText
-  imageSrc="/images/model1.jpg"
-  heading="Earn up to 4.5% APY on your business savings"
-  description="Lorem ipsum dolor sit amet..."
-  buttonText="Learn More"
-  variant="slide" // Scroll-triggered slide-in animation
-/>
+        imageSrc="/images/model1.jpg"
+        heading="Earn up to 4.5% APY on your business savings"
+        description="Lorem ipsum dolor sit amet..."
+        buttonText="Learn More"
+        variant="slide" // Scroll-triggered slide-in animation
+      />
 
-<ImageWithText
-  imageSrc="/images/model2.jpg"
-  heading="Fast and Reliable Junk Removal Services"
-  description="We help you clear out unwanted items quickly and efficiently..."
-  buttonText="Get Started"
-  imageFirst={true}
-  variant="zoom" // Scroll reveal with zoom effect
-/>
+      <ImageWithText
+        imageSrc="/images/model2.jpg"
+        heading="Fast and Reliable Junk Removal Services"
+        description="We help you clear out unwanted items quickly and efficiently..."
+        buttonText="Get Started"
+        imageFirst={true}
+        variant="zoom" // Scroll reveal with zoom effect
+      />
       <JunkshopGallery />
     </div>
   )
