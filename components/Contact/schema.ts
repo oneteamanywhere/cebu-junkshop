@@ -1,8 +1,7 @@
 import * as yup from "yup"
 
 export const contactSchema = yup.object({
-  firstName: yup.string().required("First name is required"),
-  lastName: yup.string().required("Last name is required"),
+  fullName: yup.string().required("Full name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
   phoneNumber: yup.string().trim()
     .matches(/^(?:\+63|0)?9\d{9}$/, "Phone number is invalid")

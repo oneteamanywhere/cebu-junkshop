@@ -10,8 +10,7 @@ export const ContactFormRHF = () => {
     formState: { errors, isSubmitting }
   } = useForm({
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      fullName: "",
       phoneNumber: "",
       email: "",
       message: "",
@@ -21,9 +20,9 @@ export const ContactFormRHF = () => {
     resolver: yupResolver(contactSchema)
   })
 
-  const sendContactForm = async (data: any) => {
+  const saveContactInformation = async (data: any) => {
     try {
-      const res = await fetch("/api/contact/sendMessage", {
+      const res = await fetch("/api/contact/saveContactInformation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -31,10 +30,42 @@ export const ContactFormRHF = () => {
 
       if (!res.ok) {
         const errorBody = await res.json().catch(() => ({}))
-        throw new Error(errorBody.error || "Failed to send")
+        throw new Error(errorBody.error || "Failed to save contact information.")
       }
 
-      alert("Message sent successfully!")
+      alert("Contact information saved successfully!")
+
+      return true
+    } catch (err: any) {
+      console.error("Failed to save contact information:", err)
+    }
+  }
+
+  const sendEmailConfirmation = async (data: any) => {
+    try {
+      const res = await fetch("/api/contact/sendEmailConfirmation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      })
+
+      if (!res.ok) {
+        const errorBody = await res.json().catch(() => ({}))
+        throw new Error(errorBody.error || "Failed to send email confirmation")
+      }
+
+      alert("Email confirmation sent successfully!")
+    } catch (err: any) {
+      console.error("Failed to send email confirmation:", err)
+    }
+  }
+
+  const submit = async (data: any) => {
+    try {
+      const saved = await saveContactInformation(data)
+      if (saved) {
+        await sendEmailConfirmation(data)
+      }
     } catch(err: any) {
       alert(err?.message || "Something went wrong.")
     }
@@ -42,70 +73,61 @@ export const ContactFormRHF = () => {
 
   return (
     <form
-			className="flex flex-wrap gap-3"
-      onSubmit={handleSubmit(sendContactForm)}
+			className="flex flex-col flex-wrap gap-3 px-4"
+      onSubmit={handleSubmit(submit)}
 		>
-			<div className="flex items-center gap-2 w-1/2">
-				<label>First Name</label>
+      <h2 className="text-2xl md:text-3xl font-semibold w-[90%] text-center">We'd love to hear from you!</h2>
+
+			<div className="flex flex-col gap-2 w-full">
+				<label>FullName</label>
 				<div className="w-full flex flex-col gap-1">
 					<input
             {...register(
-              "firstName",
+              "fullName",
             )}
-            placeholder="Enter first name"
-						className="w-full h-[30px] border border-gray-300 rounded-md hover:border-blue-500 hover:outline-0"
+            placeholder="Enter your full name"
+						className="w-full h-[40px] border border-gray-300 rounded-md hover:border-blue-500 hover:outline-0 indent-2"
 					/>
-          <div className="text-xs text-red-500">{errors.firstName?.message}</div>
+          <div className="text-xs text-red-500">{errors.fullName?.message}</div>
 				</div>
-
 			</div>
 
-			<div className="flex items-center gap-2 w-1/2">
-				<label>Last Name</label>
-        <div className="w-full flex flex-col gap-1">
-          <input
-            {...register("lastName")}
-            placeholder="Enter last name"
-            className="w-full h-[30px] border border-gray-300 rounded-md hover:border-blue-500 hover:outline-0"
-          />
-          <div className="text-xs text-red-500">{errors.lastName?.message}</div>
+      <div className="w-full flex items-center gap-3">
+        <div className="flex flex-col gap-2 w-1/2">
+          <label>Email</label>
+          <div className="w-full flex flex-col gap-1">
+            <input
+              {...register(
+                "email",
+              )}
+              placeholder="Enter your active email address"
+              className="w-full h-[40px] border border-gray-300 rounded-md hover:border-blue-500 hover:outline-0 indent-2"
+            />
+            <div className="text-xs text-red-500">{errors.email?.message}</div>
+          </div>
         </div>
-			</div>
 
-			<div className="flex items-center gap-2 w-1/2">
-				<label>Email</label>
-        <div className="w-full flex flex-col gap-1">
-          <input
-            {...register(
-              "email",
-            )}
-            placeholder="Enter your active email address"
-            className="w-full h-[30px] border border-gray-300 rounded-md hover:border-blue-500 hover:outline-0"
-          />
-          <div className="text-xs text-red-500">{errors.email?.message}</div>
+        <div className="flex flex-col gap-2 w-full">
+          <label>Phone Number</label>
+          <div className="w-full flex flex-col gap-1">
+            <input
+              {...register("phoneNumber")}
+              placeholder="Enter your active phone number"
+              className="w-full h-[40px] border border-gray-300 rounded-md hover:border-blue-500 hover:outline-0 indent-2"
+            />
+            <div className="text-xs text-red-500">{errors.phoneNumber?.message}</div>
+          </div>
         </div>
-			</div>
+      </div>
 
-			<div className="flex items-center gap-2 w-1/2">
-				<label>Phone Number</label>
-        <div className="w-full flex flex-col gap-1">
-          <input
-            {...register("phoneNumber")}
-            placeholder="Enter your active phone number"
-            className="w-full h-[30px] border border-gray-300 rounded-md hover:border-blue-500 hover:outline-0"
-          />
-          <div className="text-xs text-red-500">{errors.phoneNumber?.message}</div>
-        </div>
-			</div>
-
-			<div className="flex items-center gap-2 w-1/2">
+			<div className="flex flex-col gap-2">
 				<label>Message</label>
         <div className="w-full flex flex-col gap-1">
           <textarea
             {...register("message")}
             placeholder="Enter your message"
             rows={6}
-            className="w-full border border-gray-300 rounded-md hover:border-blue-500 hover:outline-0"
+            className="w-full border border-gray-300 rounded-md hover:border-blue-500 hover:outline-0 indent-2"
           />
           <div className="text-xs text-red-500">{errors.message?.message}</div>
         </div>
@@ -124,9 +146,14 @@ export const ContactFormRHF = () => {
 			<div className="w-full flex justify-end">
 				<button
 					type="submit"
-					className="bg-blue-500 text-white px-4 py-2 rounded-md"
+					className="bg-blue-500 text-white px-4 py-2 rounded-lg"
 				>
-          {isSubmitting ? <p>submitting... please wait...</p>: "Submit"}
+          {isSubmitting ? (
+            <div className="flex items-center gap-3">
+              <svg className="mr-3 size-5 animate-spin ..." viewBox="0 0 24 24"></svg>
+              <span>Processing...</span>
+            </div>
+          ): "Submit"}
 				</button>
 			</div>
 		</form>
