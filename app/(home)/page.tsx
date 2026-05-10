@@ -2,7 +2,9 @@ import Features from "./Features"
 import Stats from "./Stats"
 import { ImageWithText } from "@/components"
 import JunkshopGallery from "@/components/JunkshopGallery";
-
+// import ContactForm from "@/components/Contact"
+import { ContactFormRHF } from "@/components/Contact/rhf"
+import VideoGallery from "@/components/VideoGallery"
 
 const SamplePage = () => {
   return (
@@ -30,6 +32,10 @@ const SamplePage = () => {
         variant="zoom" // Scroll reveal with zoom effect
       />
       <JunkshopGallery />
+
+      <ContactFormRHF />
+
+      <VideoGallery />
     </div>
   )
 }
