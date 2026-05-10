@@ -4,7 +4,7 @@ import { ImageWithText } from "@/components"
 import JunkshopGallery from "@/components/JunkshopGallery";
 // import ContactForm from "@/components/Contact"
 import { ContactFormRHF } from "@/components/Contact/rhf"
-
+import VideoGallery from "@/components/VideoGallery"
 
 const SamplePage = () => {
   return (
@@ -34,6 +34,8 @@ const SamplePage = () => {
       <JunkshopGallery />
 
       <ContactFormRHF />
+
+      <VideoGallery />
     </div>
   )
 }
